@@ -15,23 +15,21 @@ namespace RingBuffer
             Buffer = buffer;
         }
 
-        public async Task Subscribe()
+        public Task Subscribe()
         {
-
-            while(!Buffer.IsEmpty())
+            int i = 0;
+            while(true)
             {
                 // try reading from buffer
+
                 string car = Buffer.Read();
                 if (!string.IsNullOrEmpty(car))
                 {
-                    Console.WriteLine($"Subscribed To : {car}");
+                    i++;
+                    Console.WriteLine($"Subscribed To : {car}\t itemNo: {i}");
+                    
                 }
-                await Task.Delay(1000);
-
             }
-
-            return;
-
         }
     }
 }

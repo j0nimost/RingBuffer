@@ -10,19 +10,18 @@ namespace RingBuffer
         private volatile int ReadPos = 0;
         public readonly int Capacity;
 
-        private object[] Buffer;
+        private T[] Buffer;
 
         public RingBuffer(int bufferSize = 0)
         {
-            Buffer = bufferSize > 0 ? new object[bufferSize] : new object[DefaultBufferSize];
+            Buffer = bufferSize > 0 ? new T[bufferSize] : new T[DefaultBufferSize];
             Capacity = Buffer.Length;
         }
 
         public bool Write(T item)
         {
             // check if buffer is full
-            bool isFull = (WritePos - ReadPos) + 1 == Capacity;
-            if(!isFull)
+            if(!IsFull())
             {
                 int pos = WritePos + 1;
                 Buffer[pos % Capacity] = item;
@@ -38,8 +37,8 @@ namespace RingBuffer
             // check if buffer is empty
             if(!IsEmpty())
             {
-                T item =(T)Buffer[ReadPos % Capacity];
-                Buffer[ReadPos % Capacity] = null; // remove it from the buffer after reading
+                T item = Buffer[ReadPos % Capacity];
+                Buffer[ReadPos % Capacity] = default; // remove it from the buffer after reading
                 ReadPos++;
                 return item;
             }
@@ -50,6 +49,11 @@ namespace RingBuffer
         public bool IsEmpty()
         {
             return WritePos < ReadPos;
+        }
+
+        public bool IsFull()
+        {
+            return (WritePos - ReadPos) + 1 == Capacity;
         }
     }
 }
