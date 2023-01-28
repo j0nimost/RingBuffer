@@ -70,7 +70,7 @@ namespace RingBuffer
 
                 if (Buffer.Write(SportCars[i]))
                 {
-                    Console.WriteLine($"Published: {SportCars[i]}");
+                    Console.WriteLine($"[+] Published: {SportCars[i]}");
                     i++;
                 }
             }

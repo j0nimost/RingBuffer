@@ -26,7 +26,7 @@ namespace RingBuffer
                 if (!string.IsNullOrEmpty(car))
                 {
                     i++;
-                    Console.WriteLine($"Subscribed To : {car}\t itemNo: {i}");
+                    Console.WriteLine($"[-] Subscribed To : {car}\t itemNo: {i}");
                     
                 }
             }
